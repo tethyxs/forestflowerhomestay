@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport locked for native-app feel and crash prevention -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Forest Flower Home Stay | COORG</title>
+    <!-- Google Fonts: Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* ========================================================
+           SLEEK NEUTRAL THEME & TYPOGRAPHY
+           ======================================================== */
+        :root {
+            --bg-main: #fcfcfc;
+            --bg-alt: #f0f0f0;
+            --surface: #ffffff;
+            --text-dark: #111111;
+            --text-muted: #777777;
+            --accent: #000000;
+            --border: #e2e2e2;
+            
+            --bezier-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+            --bezier-crazy: cubic-bezier(0.16, 1, 0.3, 1); 
+            --transition-insane: all 1.5s var(--bezier-crazy);
+            --transition-fast: all 0.5s var(--bezier-smooth);
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overscroll-behavior-y: none; /* Prevents ugly mobile bounce */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: transparent;
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+            width: 100vw;
+        }
+
+        h1, h2, h3, h4 { font-weight: 800; text-transform: uppercase; letter-spacing: -1px; }
+
+        /* Custom Seamless Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* ========================================================
+           CINEMATIC BACKGROUND ENGINE (GPU ACCELERATED)
+           ======================================================== */
+        .cinematic-bgs {
+            position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; background: #000; overflow: hidden;
+        }
+        .bg-layer {
+            position: absolute; top: -5%; left: -5%; width: 110%; height: 110%;
+            background-size: cover; background-position: center;
+            transition: opacity 2s var(--bezier-smooth); 
+            will-change: opacity, transform;
+            backface-visibility: hidden; 
+        }
+        
+        /* FIXED DIMMING: Restored the 0.5 dark gradient to match the Estate section */
+        #bg-hero {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('canon/aaa.png');
+            opacity: 1;
+            animation: smoothZoom 30s linear infinite alternate;
+        }
+        #bg-estate {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('canon/IMG_5666.JPG');
+            opacity: 0;
+            animation: smoothZoom 35s linear infinite alternate-reverse;
+        }
+
+        @keyframes smoothZoom {
+            0% { transform: scale(1) translateZ(0); }
+            100% { transform: scale(1.05) translateZ(0); }
+        }
+
+        /* ========================================================
+           CRAZY LOADER & DYNAMIC NAVBAR
+           ======================================================== */
+        #loader {
+            position: fixed; inset: 0; background: var(--accent); z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+            color: white; font-weight: 900; font-size: clamp(1.5rem, 3vw, 3rem); letter-spacing: 15px; text-transform: uppercase;
+            transition: transform 1.2s var(--bezier-crazy), opacity 1.2s ease;
+            will-change: transform, opacity;
+        }
+        .loader-subtitle { font-weight: 300; letter-spacing: 5px; font-size: 1rem; margin-top: 20px; color: #888; }
+
+        /* ========================================================
+   REFINED RESPONSIVE HEADER & LOGO ENGINE
+   ======================================================== */
+header {
+    position: fixed; width: 100%; top: 0; padding: 2rem 5%;
+    display: flex; justify-content: space-between; 
+    align-items: flex-start; 
+    z-index: 1000; color: white; 
+    transition: padding 0.5s var(--bezier-smooth), background 0.5s var(--bezier-smooth), box-shadow 0.5s ease;
+    will-change: padding, background;
+}
+
+header.scrolled {
+    padding: 1rem 5%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    align-items: center; 
+}
+
+.logo { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+
+.logo img { 
+    height: clamp(70px, 8vw, 120px); 
+    width: auto; border-radius: 8px; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5); 
+    transition: height 0.5s var(--bezier-smooth), box-shadow 0.5s ease; 
+    will-change: height;
+}
+
+header.scrolled .logo img {
+    height: 55px; 
+    box-shadow: none;
+}
+
+/* ========================================================
+   VINTAGE STAMPED SEAL & REFINED NAV
+   ======================================================== */
+/* Vintage Stamped Seal Effect */
+/* ========================================================
+   FIXED HEADER & LOGO/STAMP STACK
+   ======================================================== */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    padding: 1.5rem 5%;
+    /* Use space-between to push Branding Stack left and Nav right */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items to the top */
+    z-index: 1000;
+    transition: all 0.4s ease;
+    background-color: transparent;
+}
+
+/* 1. The Vertical Stack (Replaces the old logo area) */
+.branding-stack {
+    display: flex;
+    flex-direction: column; /* Stack logo and stamp vertically */
+    align-items: flex-start; /* Align both to the left */
+    gap: 10px; /* Space between logo and stamp */
+}
+
+/* 2. Logo Styles (Increased size slightly for readability) */
+.branding-stack .logo{
+    overflow:hidden;
+}
+.branding-stack .logo img{
+    height:120px;
+    width:auto;
+    border-radius:4px;
+    box-shadow:0 2px 10px rgba(0,0,0,.3);
+    transition:height .4s ease;
+}
+
+/* 3. Stamp Image (The crucial fix: background disappears) */
+/* 4. Navigation (Stays on the right) */
+nav {
+    margin-top: 15px;
+}
+
+nav ul {
+    display: flex;
+    gap: 3vw;
+    list-style: none;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+/* ========================================================
+   SCROLLED STATE (Compacts everything)
+   ======================================================== */
+header.scrolled {
+    padding: 0.5rem 5%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    align-items: center; /* Re-center everything when small */
+}
+
+header.scrolled .branding-stack {
+    gap: 2px; /* Almost no gap when scrolled */
+}
+
+header.scrolled .branding-stack .logo{
+    overflow:hidden;
+}
+.branding-stack .logo img{
+    height:120px;
+    width:auto;
+    border-radius:4px;
+    box-shadow:0 2px 10px rgba(0,0,0,.3);
+    transition:height .4s ease;
+}
+
+header.scrolled header.scrolled nav {
+    margin-top: 0;
+}
+        /* ========================================================
+           THE STENCIL ENGINE (FIXED & ANIMATED)
+           ======================================================== */
+        
+        /* Instead of background-attachment: fixed, we use background-position animation */
+        @keyframes stencilPan {
+            0% { background-position: 50% 50%; background-size: 110%; }
+            100% { background-position: 55% 55%; background-size: 120%; }
+        }
+
+        .stencil-hero {
+            background-image: url('sony/DSC05327.JPG') !important;
+            background-repeat: no-repeat !important;
+            
+            /* Use pan animation instead of attachment: fixed */
+            animation: stencilPan 20s linear infinite alternate !important;
+            
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            color: transparent !important;
+            -webkit-text-fill-color: transparent !important;
+            
+            /* Keeping your high-contrast metallic filter */
+            filter: grayscale(100%) invert(1) contrast(1.8) brightness(1.1) drop-shadow(0px 8px 15px rgba(0,0,0,0.6)) !important;
+            text-shadow: none !important;
+        }
+        /* ========================================================
+           HERO SECTION LAYOUT
+           ======================================================== */
+        .hero {
+            height: 100vh; 
+            position: relative; 
+            display: flex; 
+            align-items: flex-start; 
+            padding-top: 45vh; 
+            justify-content: flex-start; 
+            padding-left: 5%; 
+            background: transparent; 
+        }
+
+        .hero-content {
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-start; 
+            text-align: left;
+        }
+
+        .hero-title { 
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900; 
+            font-size: clamp(3rem, 6.5vw, 7.5rem); 
+            line-height: 1.05; 
+            margin-bottom: 15px; 
+            will-change: transform;
+        }
+
+        .hero .kannada-title { 
+            font-weight: 400; 
+            font-size: clamp(1rem, 1.8vw, 2.2rem); 
+            letter-spacing: 5px; 
+            margin-bottom: 15px; 
+        }
+
+        .hero p { 
+            font-weight: 300; 
+            font-size: clamp(0.85rem, 1.2vw, 1.5rem); 
+            letter-spacing: 8px; 
+            text-transform: uppercase; 
+        }
+
+        /* ========================================================
+           3D SCROLL REVEAL ENGINE
+           ======================================================== */
+        .reveal-3d {
+            opacity: 0; 
+            transform: perspective(1500px) rotateX(10deg) translateY(80px) scale(0.95); 
+            transition: var(--transition-insane); 
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+        }
+        .reveal-3d.active { 
+            opacity: 1; 
+            transform: perspective(1500px) rotateX(0deg) translateY(0) scale(1) translateZ(0); 
+        }
+
+        section { padding: 15vh 5%; position: relative; z-index: 2; overflow: hidden; }
+        
+        .section-title { font-size: clamp(2.5rem, 5vw, 5rem); margin-bottom: 5vh; position: relative; display: inline-block; padding-bottom: 10px; }
+        .section-title::after { content: ''; position: absolute; bottom: 0; left: 0; width: 50px; height: 4px; transition: width 0.6s var(--bezier-smooth); }
+        .section-title:hover::after { width: 100%; background: var(--accent); }
+
+        /* ========================================================
+           ABOUT / STATS SECTION
+           ======================================================== */
+        #about { background: transparent; color: white; z-index: 1; }
+        #about .section-title { color: white; text-shadow: 0 4px 15px rgba(0,0,0,0.6); }
+        #about .section-title::after { background: white; }
+        
+        #about p.reveal-3d { color: #f0f0f0 !important; text-shadow: 0 2px 10px rgba(0,0,0,0.5); font-size: clamp(1.2rem, 2vw, 1.5rem) !important; font-weight: 300; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3vw; margin-top: 5vh; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 5vh; }
+        .stat-box { text-align: left; transition: transform 0.4s var(--bezier-smooth); }
+        .stat-box:hover { transform: translateY(-8px) translateZ(0); }
+        #about .stat-box h4 { font-size: clamp(2rem, 3.5vw, 4rem); font-weight: 900; margin-bottom: 10px; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        #about .stat-box p { font-size: clamp(0.8rem, 1vw, 0.9rem); font-weight: 600; color: #dddddd; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* ========================================================
+           SOLID BACKGROUNDS FOR LOWER SECTIONS
+           ======================================================== */
+        #cottages { background-color: var(--bg-main); color: var(--text-dark); padding-top: 10vh; }
+        #booking { background-color: var(--bg-main); color: var(--text-dark); }
+        #cottages .section-title, #booking .section-title { color: var(--accent); }
+
+        /* ========================================================
+           INFINITE CAROUSEL ENGINE 
+           ======================================================== */
+        .cottage-section { margin-bottom: 10vh; position: relative; }
+        .cottage-header { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: flex-end; margin-bottom: 3vh; padding: 0 5%; }
+        .cottage-info h3 { font-size: clamp(1.8rem, 3vw, 3rem); letter-spacing: -2px; }
+        .cottage-info p { font-size: clamp(0.8rem, 1vw, 0.9rem); font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; }
+        
+        .carousel-container {
+            width: 100vw; margin-left: -5%; overflow: hidden; position: relative; background: var(--accent); padding: 5vh 0;
+            cursor: grab;
+        }
+        .carousel-track {
+            display: flex; gap: 2vw; width: max-content;
+            animation: scrollCarousel 40s linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+        .carousel-container:hover .carousel-track { animation-play-state: paused; }
+
+        .img-placeholder {
+            width: clamp(280px, 35vw, 600px); 
+            height: clamp(186px, 23.3vw, 400px); 
+            background: linear-gradient(135deg, #1f1f1f, #333333);
+            border-radius: 5px; flex-shrink: 0; position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; color: #555;
+            transition: filter 0.4s ease, transform 0.4s var(--bezier-smooth); 
+            filter: grayscale(100%);
+            background-size: cover; background-position: center;
+            will-change: transform, filter;
+        }
+        .img-placeholder:hover { transform: scale(0.98) translateZ(0); filter: grayscale(0%); color: transparent; }
+        .img-placeholder::after { content: 'LANDSCAPE IMAGE'; font-weight: 800; font-size: clamp(0.8rem, 1.5vw, 1.5rem); letter-spacing: 2px; position: absolute; }
+        
+        .loaded-img { filter: grayscale(25%); } 
+        .loaded-img::after { display: none !important; } 
+        .loaded-img:hover { filter: grayscale(0%); }
+
+        @keyframes scrollCarousel {
+            0% { transform: translateX(0) translateZ(0); }
+            100% { transform: translateX(calc(-50% - 1vw)) translateZ(0); } 
+        }
+
+        /* ========================================================
+           SLEEK NEUTRAL BOOKING SECTION
+           ======================================================== */
+        .booking-banner { background: var(--accent); color: white; padding: 10vh 5%; text-align: center; border-radius: 10px; margin: 0 5%; position: relative; overflow: hidden; }
+        .booking-banner h2 { font-size: clamp(2rem, 4vw, 4rem); margin-bottom: 2vh; color: white; }
+        .booking-banner p { font-size: clamp(1rem, 1.2vw, 1.2rem); font-weight: 300; margin-bottom: 5vh; color: #ccc; }
+        
+        .btn-sleek {
+            background: var(--accent); color: white; border: none; padding: 15px 40px;
+            font-size: clamp(0.8rem, 1vw, 1rem); font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+            cursor: pointer; transition: transform 0.4s var(--bezier-smooth), background 0.3s ease, color 0.3s ease; 
+            border-radius: 50px;
+            will-change: transform;
+        }
+        .btn-sleek:hover { background: var(--text-muted); color: white; transform: scale(1.05) translateZ(0); }
+
+        .booking-banner .btn-sleek { background: white; color: var(--accent); }
+        .booking-banner .btn-sleek:hover { background: var(--text-muted); color: white; }
+
+        /* ========================================================
+           MINIMAL FOOTER
+           ======================================================== */
+        footer { background: var(--bg-alt); padding: 10vh 5% 5vh; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 5vw; position: relative; z-index: 5; color: var(--text-dark); }
+        .footer-col h4 { font-size: clamp(1.2rem, 1.5vw, 1.5rem); margin-bottom: 3vh; color: var(--accent); }
+        .footer-col p { font-size: clamp(0.85rem, 1vw, 0.9rem); font-weight: 500; margin-bottom: 1.5vh; color: var(--text-muted); display: flex; align-items: flex-start; gap: 15px; }
+        .footer-col i { color: var(--accent); font-size: 1.2rem; margin-top: 3px; }
+        .footer-bottom { grid-column: 1 / -1; text-align: center; margin-top: 10vh; font-size: 0.8rem; font-weight: 600; color: #aaa; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* ========================================================
+           MODAL FOR WHATSAPP BOOKING
+           ======================================================== */
+        .modal {
+            position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 2000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            will-change: opacity;
+        }
+        .modal.active { opacity: 1; pointer-events: all; }
+        
+        .modal-card { 
+            background: var(--accent); color: white; padding: 5vh 4vw; border-radius: 20px; 
+            width: 90%; max-width: 600px; 
+            max-height: 90vh; overflow-y: auto; /* Crash prevention / Accessibility on tiny screens */
+            transform: translateY(50px) scale(0.95); transition: transform 0.6s var(--bezier-smooth); 
+            will-change: transform; 
+        }
+        /* Custom scrollbar for modal */
+        .modal-card::-webkit-scrollbar { width: 5px; }
+        .modal-card::-webkit-scrollbar-track { background: var(--accent); }
+        .modal-card::-webkit-scrollbar-thumb { background: #555; border-radius: 10px; }
+
+        .modal.active .modal-card { transform: translateY(0) scale(1) translateZ(0); }
+        .close-btn { position: absolute; top: 20px; right: 25px; font-size: 2rem; color: var(--text-muted); cursor: pointer; transition: transform 0.4s var(--bezier-smooth), color 0.3s ease; }
+        .close-btn:hover { transform: rotate(90deg) translateZ(0); color: white; }
+        
+        .form-group { margin-bottom: 20px; display: flex; flex-direction: column; }
+        .form-group label { font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; margin-bottom: 8px; color: #aaa; text-transform: uppercase; }
+        .form-group input, .form-group select { background: transparent; border: 1px solid #444; color: white; padding: 15px; font-size: 1rem; border-radius: 5px; transition: border 0.3s ease; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: white; }
+
+        /* ========================================================
+   HERO BADGE ALIGNMENT
+   ======================================================== */
+.homestay-row {
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:15px;
+}
+
+.hero-stamp {
+    height:clamp(60px,8vw,110px);
+    width:auto;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+}
+
+/* ========================================================
+           MANDATORY MOBILE OVERRIDES (EXTREMELY FLUID)
+           ======================================================== */
+        @media(max-width: 768px) {
+            .homestay-row { gap:10px; }
+            nav ul { display: none; }
+            .logo img { height: clamp(55px, 12vw, 65px) !important; } 
+            
+            .hero { padding-top: 45vh; }
+            .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); } 
+            .hero .kannada-title { font-size: clamp(1rem, 4vw, 1.5rem); }
+            
+            /* 
+               CRASH PREVENTION FOR MOBILE: 
+               Removes the intensive background-size animation on mobile GPUs, 
+               keeping just the crisp, static parallax stencil. 
+            */
+            .stencil-hero { animation: none !important; background-size: cover !important; }
+
+            .img-placeholder { width: 85vw; height: 56vw; } 
+            .cottage-header { flex-direction: column; align-items: flex-start; }
+            .btn-sleek { width: 100%; text-align: center; margin-top: 10px; }
+            header { padding: 1.5rem 5%; }
+            header.scrolled { padding: 1rem 5%; }
+        }
+    
+/* HERO BADGE */
+.homestay-row{display:flex;align-items:center;gap:15px;margin:8px 0 20px;}
+.hero-home{font-size:clamp(1.8rem,3vw,4rem);font-weight:900;line-height:1;margin:0;}
+.hero-stamp{width:95px;height:auto;mix-blend-mode:multiply;pointer-events:none;}
+@media(max-width:768px){.hero-stamp{width:70px;}.homestay-row{gap:10px;}}
+
+</style>
+</head>
+<body>
+
+    <!-- CRAZY LOADER -->
+    <div id="loader">
+        <div style="text-align: center;">FOREST FLOWER<br>HOME STAY</div>
+        <div class="loader-subtitle">COORG</div>
+    </div>
+
+    <!-- FIXED CINEMATIC BACKGROUNDS -->
+    <div class="cinematic-bgs">
+        <div id="bg-hero" class="bg-layer"></div>
+        <div id="bg-estate" class="bg-layer"></div>
+    </div>
+
+    <!-- MINIMAL NAVBAR -->
+    <header id="mainHeader">
+    <div class="branding-stack">
+        <div class="logo">
+            <img src="canon/logo.jpeg" alt="Forest Flower Logo">
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#about">THE ESTATE</a></li>
+            <li><a href="#cottages">COTTAGES</a></li>
+            <li><a href="#booking">RESERVE</a></li>
+            <li><a href="#location">LOCATION</a></li>
+        </ul>
+    </nav>
+</header>
+    <!-- KINETIC HERO -->
+    <section class="hero">
+<div class="hero-content">
+<div class="kannada-title stencil-hero">ಫಾರೆಸ್ಟ್ ಫ್ಲವರ್ ಹೋಮ್ ಸ್ಟೇ</div>
+<h1 class="hero-title stencil-hero" style="margin-bottom:0;">FOREST FLOWER</h1>
+<div class="homestay-row">
+<h2 class="stencil-hero hero-home">HOME STAY</h2>
+<img src="canon/stamp.png" class="hero-stamp" alt="Stamp">
+</div>
+<p class="stencil-hero" style="margin-top:15px;">• COORG</p>
+</div></section>
+
+    <!-- ABOUT & STATS -->
+    <section id="about">
+        <h2 class="section-title reveal-3d">The Estate</h2>
+        <p class="reveal-3d" style="max-width: 800px; margin-bottom: 5vh;">
+                Nestled in the heart of Coorg, famously known as the Scotland of India, The Estate is surrounded by rolling hills, dense forests, sprawling coffee plantations, and the sacred Cauvery River. Located amidst the breathtaking Western Ghats, this tranquil retreat captures the essence of Coorg's natural beauty and charm. With misty mornings, scenic landscapes, and serene surroundings, it offers the perfect escape for nature lovers, adventure seekers, and those looking to unwind in comfort.        </p>
+        
+        <div class="stats-grid reveal-3d">
+            <div class="stat-box"><h4>4</h4><p>Exclusive Cottages</p></div>
+            <div class="stat-box"><h4>1 PM</h4><p>Check-In Time</p></div>
+            <div class="stat-box"><h4>11 AM</h4><p>Check-Out Time</p></div>
+            <div class="stat-box"><h4>24/7</h4><p>Estate Access</p></div>
+        </div>
+    </section>
+
+    <!-- COTTAGES & AMENITIES (THE CAROUSELS) -->
+    <section id="cottages">
+        <h2 class="section-title reveal-3d">The Collection</h2>
+        <!-- 4. WOODROSE COTTAGE -->
+        <div class="cottage-section reveal-3d">
+            <div class="cottage-header">
+                <div class="cottage-info">
+                    <h3>WOODROSE</h3>
+                    <p>Wooden Cottage • 4 Guests</p>
+                </div>
+                <button class="btn-sleek" onclick="openModal('Woodrose Cottage')">Book Woodrose</button>
+            </div>
+           <div class="carousel-container" style="background: #e2e2e2;">
+    <div class="carousel-track" style="animation-direction: reverse;">
+
+        <!-- First Set -->
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/file_000000004c2c72099c4e4979d7ea1928.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5668.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5676.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5689.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5690.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5702.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5703.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5706.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5715.jpeg');"></div>
+
+        <!-- Duplicate Set for Infinite Scroll -->
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/file_000000004c2c72099c4e4979d7ea1928.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5668.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5676.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5689.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5690.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5702.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5703.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5706.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5715.jpeg');"></div>
+
+    </div>
+</div>
+        </div>
+
+
+        <!-- 1. ORCHID COTTAGE -->
+        <div class="cottage-section reveal-3d">
+            <div class="cottage-header">
+                <div class="cottage-info">
+                    <h3>ORCHID</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <p>Laterite Stone Cottage • 2 Guests</p>
+                </div>
+                <button class="btn-sleek" onclick="openModal('Orchid Cottage')">Book Orchid</button>
+            </div>
+            <div class="carousel-container">
+    <div class="carousel-track">
+
+        <!-- First Set -->
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05332.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05341.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05385.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05387.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05392.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05396.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05404.JPG');"></div>
+
+        <!-- Duplicate Set (required for smooth infinite scroll) -->
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05332.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05341.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05385.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05387.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05392.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05396.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05404.JPG');"></div>
+
+    </div>
+</div>
+        </div>
+
+        <!-- 2. JASMINE COTTAGE -->
+        <div class="cottage-section reveal-3d">
+            <div class="cottage-header">
+                <div class="cottage-info">
+                    <h3>JASMINE</h3>
+                    <p>Premium Cottage • 2-3 Guests</p>
+                </div>
+                <button class="btn-sleek" onclick="openModal('Jasmine Cottage')">Book Jasmine</button>
+            </div>
+            <div class="carousel-container" style="background: #e2e2e2;">
+    <div class="carousel-track" style="animation-direction: reverse;">
+
+        <!-- First Set -->
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/DSC05398.JPG');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5728.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5736.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5742.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5745.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5747.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5750.jpeg');"></div>
+
+        <!-- Duplicate Set for Infinite Scroll -->
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/DSC05398.JPG');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5728.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5736.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5742.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5745.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5747.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5750.jpeg');"></div>
+
+    </div>
+</div>
+        </div>
+
+        <!-- 3. TULIP COTTAGE -->
+        <div class="cottage-section reveal-3d">
+            <div class="cottage-header">
+                <div class="cottage-info">
+                    <h3>TULIP</h3>
+                    <p>Nature Cottage • 2 Guests</p>
+                </div>
+                <button class="btn-sleek" onclick="openModal('Tulip Cottage')">Book Tulip</button>
+            </div>
+            <div class="carousel-container">
+    <div class="carousel-track">
+
+        <!-- First Set -->
+        <div class="img-placeholder loaded-img" style="background-image: url('tulip/DSC05302.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('tulip/DSC05306.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('tulip/IMG_5679.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('tulip/IMG_5680.jpeg');"></div>
+        
+
+        <!-- Duplicate Set for Infinite Scroll -->
+        <div class="img-placeholder loaded-img" style="background-image: url('tulip/DSC05302.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('tulip/DSC05306.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('tulip/IMG_5679.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('tulip/IMG_5680.jpeg');"></div>
+
+    </div>
+</div>
+        </div>
+
+        
+        <!-- 5. HUNGER HOUSE CAFETERIA -->
+        <div class="cottage-section reveal-3d" style="margin-bottom: 0;">
+            <div class="cottage-header">
+                <div class="cottage-info">
+                    <h3>HUNGER HOUSE</h3>
+                    <p>Cafeteria • Hygienic homemade wines available</p>
+                </div>
+                <button class="btn-sleek" onclick="openModal('Hunger House Enquiry')">Enquire</button>
+            </div>
+           <div class="carousel-container">
+    <div class="carousel-track">
+
+        <!-- First Set -->
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/022208a7-d271-423d-b1bc-a178908eb73c.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/1000244428.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/1000244432.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/920f9c62-5794-4d29-b22f-99c8c8733303.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/aaa7f3be-dc9b-45af-aac4-adca0b1733a2.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/DSC05348.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5814.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5816.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5817.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5820.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5823.jpeg');"></div>
+
+    
+        <!-- Duplicate Set for Infinite Scroll -->
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/022208a7-d271-423d-b1bc-a178908eb73c.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/1000244428.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/1000244432.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/920f9c62-5794-4d29-b22f-99c8c8733303.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/aaa7f3be-dc9b-45af-aac4-adca0b1733a2.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/DSC05348.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5814.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5816.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5817.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5820.jpeg');"></div>
+        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5823.jpeg');"></div>
+
+    </div>
+</div>
+        </div>
+
+    </section>
+
+    <!-- BOOKING SECTION -->
+    <section id="booking" class="reveal-3d">
+        <div class="booking-banner">
+            <h2>RESERVE YOUR STAY</h2>
+            <p>Direct bookings starting from ₹4,200. Skip the fees, connect directly with us.</p>
+            <button class="btn-sleek" onclick="openModal('General Reservation')">CHECK AVAILABILITY</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="location">
+        <div class="footer-col reveal-3d">
+            <h4>FOREST FLOWER</h4>
+            <p><i class="fas fa-map-marker-alt"></i> <span>Nani Estate, Cheppudi Road, Horoor Village & Post, Sunticoppa – 571237, Kodagu, Karnataka</span></p>
+            <p><i class="fas fa-map-pin"></i> <span>Plus Code: CRC3+RG Madikeri</span></p>
+            <p><i class="fas fa-bus"></i> <span>Getting Here:
+
+Reach Suntikoppa and search for Coorg Greens Plantation Walk, Kedakal on Google Maps. From there, follow the Forest Flower signboard and take the left turn. Continue straight until you reach the second Forest Flower signboard, then take the right. Follow the signboards to arrive at the homestay.
+</span></p>
+            
+        
+            <p><i class="fas fa-phone-alt"></i> <span>094484 33128 / 098454 26744</span></p>
+            <p style="margin-top: 20px;"><i class="fas fa-phone"></i> <span>89518 41251 (Business)</span></p>
+            
+            <br>
+            <a href="https://www.google.com/maps/place/Forest+Flower+Home+Stay/@12.4220975,75.8038281,17z/data=!4m9!3m8!1s0x3ba5aa9e89b794ad:0x4a0c3615de5dd68d!5m2!4m1!1i2!8m2!3d12.4220975!4d75.8038281!16s%2Fg%2F1tgcwhfc?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-sleek" style="padding: 10px 25px; font-size: 0.8rem;">Open in Maps</a>
+        </div>
+        <div class="footer-col reveal-3d">
+            <h4>PROTOCOL</h4>
+            <p><i class="far fa-clock"></i> <span>Check-in: 1:00 PM</span></p>
+            <p><i class="far fa-clock"></i> <span>Check-out: 11:00 AM</span></p>
+            
+        </div>
+        <div class="footer-bottom reveal-3d">
+            © 2026 Forest Flower Home Stay
+        </div>
+    </footer>
+
+    <!-- SLEEK BOOKING MODAL -->
+    <div id="bookingModal" class="modal">
+        <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+        <div class="modal-card">
+            <h3 style="font-size: clamp(1.5rem, 2vw, 2.5rem); margin-bottom: 20px;">RESERVATION REQUEST</h3>
+            <form id="whatsappForm" onsubmit="sendToWhatsApp(event)">
+                <input type="hidden" id="roomType" value="">
+                <div class="form-group"><label>Name</label><input type="text" id="custName" required placeholder="John Doe"></div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group"><label>Check In</label><input type="date" id="checkIn" required></div>
+                    <div class="form-group"><label>Check Out</label><input type="date" id="checkOut" required></div>
+                </div>
+                <div class="form-group">
+                    <label>Guests</label>
+                    <select id="guestCount" style="color: black;">
+                        <option value="2">2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4+">4+ Guests</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-sleek" style="background: white; color: black; width: 100%; margin-top: 10px;">CONNECT VIA WHATSAPP</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADVANCED PHYSICS SCRIPT -->
+    <script>
+        // 1. Crazy Loader Sequence - Optimized for smoothness
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                loader.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 1200); 
+            }, 800);
+        });
+
+        // 2. Cinematic Crossfade & Shrinking Header Logic
+        const bgHero = document.getElementById('bg-hero');
+        const bgEstate = document.getElementById('bg-estate');
+        const aboutSection = document.getElementById('about');
+        const header = document.getElementById('mainHeader');
+
+        let isScrolling = false;
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    let scrollY = window.scrollY;
+
+                    if (scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+
+                    const rect = aboutSection.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    
+                    if (rect.top < windowHeight * 0.65 && rect.bottom > 0) {
+                        bgEstate.style.opacity = '1';
+                    } else {
+                        bgEstate.style.opacity = '0';
+                    }
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        });
+
+        // 3. 3D Intersection Observer Reveals
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal-3d').forEach(el => observer.observe(el));
+
+        // 4. Modal Logic
+        const modal = document.getElementById("bookingModal");
+        function openModal(roomType) {
+            document.getElementById("roomType").value = roomType;
+            modal.classList.add("active");
+        }
+        function closeModal() {
+            modal.classList.remove("active");
+        }
+
+        // 5. WhatsApp Booking Logic
+        function sendToWhatsApp(event) {
+            event.preventDefault();
+            const name = document.getElementById("custName").value;
+            const checkIn = document.getElementById("checkIn").value;
+            const checkOut = document.getElementById("checkOut").value;
+            const guests = document.getElementById("guestCount").value;
+            const roomType = document.getElementById("roomType").value;
+
+            const message = `*NEW BOOKING ENQUIRY - FOREST FLOWER*%0A%0A*Interest:* ${roomType}%0A*Name:* ${name}%0A*Dates:* ${checkIn} to ${checkOut}%0A*Guests:* ${guests}%0A%0AHi, I would like to enquire about availability and rates.`;
+            
+            const ownerNumber = "919448433128"; 
+            
+            window.open(`https://wa.me/${ownerNumber}?text=${message}`, '_blank');
+            closeModal();
+        }
+        
+    </script>
+    <div class="footer-bottom reveal-3d">
+    <div>© 2026 Forest Flower Home Stay. All Rights Reserved.</div>
+
+    <div style="margin-top:12px; font-size:0.9rem; text-transform:none; letter-spacing:1px; line-height:1.8;">
+        Website designed &amp; developed by
+        <a href="https://www.instagram.com/sanath.cr2/"
+           target="_blank"
+           style="color:#666; text-decoration:none; font-weight:600;">
+            @sanath.cr2
+        </a>
+
+        &nbsp;|&nbsp;
+
+        Photography by
+        <a href="https://www.instagram.com/nishant_arw/"
+           target="_blank"
+           style="color:#666; text-decoration:none; font-weight:600;">
+            @nishant_arw
+        </a>
+    </div>
+</div>
+</body>
+</html>
