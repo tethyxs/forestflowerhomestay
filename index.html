@@ -5,6 +5,16 @@
     <!-- Viewport locked for native-app feel and crash prevention -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Forest Flower Home Stay | COORG</title>
+    
+    <!-- ========================================================
+         PRELOAD CRITICAL ASSETS (Hero, Logo, Fonts)
+         ======================================================== -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;600;800;900&display=swap" as="style">
+    <link rel="preload" href="canon/logo.jpeg" as="image">
+    <link rel="preload" href="canon/stamp.png" as="image">
+    <link rel="preload" href="canon/aaa.png" as="image">
+    <link rel="preload" href="sony/DSC05327.JPG" as="image">
+
     <!-- Google Fonts: Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;600;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -135,10 +145,6 @@ header.scrolled .logo img {
 }
 
 /* ========================================================
-   VINTAGE STAMPED SEAL & REFINED NAV
-   ======================================================== */
-/* Vintage Stamped Seal Effect */
-/* ========================================================
    FIXED HEADER & LOGO/STAMP STACK
    ======================================================== */
 header {
@@ -146,24 +152,21 @@ header {
     width: 100%;
     top: 0;
     padding: 1.5rem 5%;
-    /* Use space-between to push Branding Stack left and Nav right */
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; /* Align items to the top */
+    align-items: flex-start; 
     z-index: 1000;
     transition: all 0.4s ease;
     background-color: transparent;
 }
 
-/* 1. The Vertical Stack (Replaces the old logo area) */
 .branding-stack {
     display: flex;
-    flex-direction: column; /* Stack logo and stamp vertically */
-    align-items: flex-start; /* Align both to the left */
-    gap: 10px; /* Space between logo and stamp */
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 10px; 
 }
 
-/* 2. Logo Styles (Increased size slightly for readability) */
 .branding-stack .logo{
     overflow:hidden;
 }
@@ -175,8 +178,6 @@ header {
     transition:height .4s ease;
 }
 
-/* 3. Stamp Image (The crucial fix: background disappears) */
-/* 4. Navigation (Stays on the right) */
 nav {
     margin-top: 15px;
 }
@@ -204,11 +205,11 @@ header.scrolled {
     padding: 0.5rem 5%;
     background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(10px);
-    align-items: center; /* Re-center everything when small */
+    align-items: center; 
 }
 
 header.scrolled .branding-stack {
-    gap: 2px; /* Almost no gap when scrolled */
+    gap: 2px; 
 }
 
 header.scrolled .branding-stack .logo{
@@ -222,14 +223,12 @@ header.scrolled .branding-stack .logo{
     transition:height .4s ease;
 }
 
-header.scrolled header.scrolled nav {
+header.scrolled nav {
     margin-top: 0;
 }
         /* ========================================================
            THE STENCIL ENGINE (FIXED & ANIMATED)
            ======================================================== */
-        
-        /* Instead of background-attachment: fixed, we use background-position animation */
         @keyframes stencilPan {
             0% { background-position: 50% 50%; background-size: 110%; }
             100% { background-position: 55% 55%; background-size: 120%; }
@@ -238,16 +237,11 @@ header.scrolled header.scrolled nav {
         .stencil-hero {
             background-image: url('sony/DSC05327.JPG') !important;
             background-repeat: no-repeat !important;
-            
-            /* Use pan animation instead of attachment: fixed */
             animation: stencilPan 20s linear infinite alternate !important;
-            
             -webkit-background-clip: text !important;
             background-clip: text !important;
             color: transparent !important;
             -webkit-text-fill-color: transparent !important;
-            
-            /* Keeping your high-contrast metallic filter */
             filter: grayscale(100%) invert(1) contrast(1.8) brightness(1.1) drop-shadow(0px 8px 15px rgba(0,0,0,0.6)) !important;
             text-shadow: none !important;
         }
@@ -426,11 +420,10 @@ header.scrolled header.scrolled nav {
         .modal-card { 
             background: var(--accent); color: white; padding: 5vh 4vw; border-radius: 20px; 
             width: 90%; max-width: 600px; 
-            max-height: 90vh; overflow-y: auto; /* Crash prevention / Accessibility on tiny screens */
+            max-height: 90vh; overflow-y: auto; 
             transform: translateY(50px) scale(0.95); transition: transform 0.6s var(--bezier-smooth); 
             will-change: transform; 
         }
-        /* Custom scrollbar for modal */
         .modal-card::-webkit-scrollbar { width: 5px; }
         .modal-card::-webkit-scrollbar-track { background: var(--accent); }
         .modal-card::-webkit-scrollbar-thumb { background: #555; border-radius: 10px; }
@@ -461,7 +454,7 @@ header.scrolled header.scrolled nav {
     pointer-events:none;
 }
 
-/* ========================================================
+        /* ========================================================
            MANDATORY MOBILE OVERRIDES (EXTREMELY FLUID)
            ======================================================== */
         @media(max-width: 768px) {
@@ -473,11 +466,6 @@ header.scrolled header.scrolled nav {
             .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); } 
             .hero .kannada-title { font-size: clamp(1rem, 4vw, 1.5rem); }
             
-            /* 
-               CRASH PREVENTION FOR MOBILE: 
-               Removes the intensive background-size animation on mobile GPUs, 
-               keeping just the crisp, static parallax stencil. 
-            */
             .stencil-hero { animation: none !important; background-size: cover !important; }
 
             .img-placeholder { width: 85vw; height: 56vw; } 
@@ -566,56 +554,37 @@ header.scrolled header.scrolled nav {
            <div class="carousel-container" style="background: #e2e2e2;">
     <div class="carousel-track" style="animation-direction: reverse;">
 
-        <!-- First Set -->
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/file_000000004c2c72099c4e4979d7ea1928.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5668.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5676.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5689.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5690.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5702.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5703.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5706.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5715.jpeg');"></div>
+        <!-- First Set (LAZY LOADED via data-bg) -->
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/file_000000004c2c72099c4e4979d7ea1928.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5668.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5676.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5689.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5690.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5702.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5703.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5706.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5715.jpeg')"></div>
 
         <!-- Duplicate Set for Infinite Scroll -->
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/file_000000004c2c72099c4e4979d7ea1928.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5668.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5676.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5689.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5690.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5702.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5703.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5706.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('woodrose/IMG_5715.jpeg');"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/file_000000004c2c72099c4e4979d7ea1928.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5668.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5676.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5689.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5690.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5702.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5703.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5706.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('woodrose/IMG_5715.jpeg')"></div>
 
     </div>
 </div>
         </div>
-
 
         <!-- 1. ORCHID COTTAGE -->
         <div class="cottage-section reveal-3d">
             <div class="cottage-header">
                 <div class="cottage-info">
                     <h3>ORCHID</h3>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <p>Laterite Stone Cottage • 2 Guests</p>
                 </div>
                 <button class="btn-sleek" onclick="openModal('Orchid Cottage')">Book Orchid</button>
@@ -624,22 +593,22 @@ header.scrolled header.scrolled nav {
     <div class="carousel-track">
 
         <!-- First Set -->
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05332.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05341.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05385.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05387.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05392.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05396.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05404.JPG');"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05332.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05341.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05385.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05387.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05392.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05396.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05404.JPG')"></div>
 
-        <!-- Duplicate Set (required for smooth infinite scroll) -->
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05332.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05341.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05385.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05387.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05392.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05396.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('orchid/DSC05404.JPG');"></div>
+        <!-- Duplicate Set -->
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05332.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05341.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05385.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05387.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05392.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05396.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('orchid/DSC05404.JPG')"></div>
 
     </div>
 </div>
@@ -658,22 +627,22 @@ header.scrolled header.scrolled nav {
     <div class="carousel-track" style="animation-direction: reverse;">
 
         <!-- First Set -->
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/DSC05398.JPG');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5728.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5736.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5742.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5745.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5747.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5750.jpeg');"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/DSC05398.JPG')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/IMG_5728.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/IMG_5736.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/IMG_5742.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/IMG_5745.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/IMG_5747.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/IMG_5750.jpeg')"></div>
 
-        <!-- Duplicate Set for Infinite Scroll -->
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/DSC05398.JPG');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5728.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5736.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5742.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5745.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5747.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('jasmine/IMG_5750.jpeg');"></div>
+        <!-- Duplicate Set -->
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/DSC05398.JPG')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/IMG_5728.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/IMG_5736.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/IMG_5742.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/IMG_5745.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/IMG_5747.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('jasmine/IMG_5750.jpeg')"></div>
 
     </div>
 </div>
@@ -692,17 +661,16 @@ header.scrolled header.scrolled nav {
     <div class="carousel-track">
 
         <!-- First Set -->
-        <div class="img-placeholder loaded-img" style="background-image: url('tulip/DSC05302.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('tulip/DSC05306.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('tulip/IMG_5679.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('tulip/IMG_5680.jpeg');"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('tulip/DSC05302.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('tulip/DSC05306.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('tulip/IMG_5679.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('tulip/IMG_5680.jpeg')"></div>
         
-
-        <!-- Duplicate Set for Infinite Scroll -->
-        <div class="img-placeholder loaded-img" style="background-image: url('tulip/DSC05302.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('tulip/DSC05306.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('tulip/IMG_5679.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('tulip/IMG_5680.jpeg');"></div>
+        <!-- Duplicate Set -->
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('tulip/DSC05302.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('tulip/DSC05306.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('tulip/IMG_5679.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('tulip/IMG_5680.jpeg')"></div>
 
     </div>
 </div>
@@ -722,31 +690,30 @@ header.scrolled header.scrolled nav {
     <div class="carousel-track">
 
         <!-- First Set -->
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/022208a7-d271-423d-b1bc-a178908eb73c.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/1000244428.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/1000244432.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/920f9c62-5794-4d29-b22f-99c8c8733303.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/aaa7f3be-dc9b-45af-aac4-adca0b1733a2.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/DSC05348.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5814.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5816.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5817.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5820.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5823.jpeg');"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/022208a7-d271-423d-b1bc-a178908eb73c.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/1000244428.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/1000244432.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/920f9c62-5794-4d29-b22f-99c8c8733303.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/aaa7f3be-dc9b-45af-aac4-adca0b1733a2.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/DSC05348.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/IMG_5814.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/IMG_5816.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/IMG_5817.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/IMG_5820.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/IMG_5823.jpeg')"></div>
 
-    
-        <!-- Duplicate Set for Infinite Scroll -->
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/022208a7-d271-423d-b1bc-a178908eb73c.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/1000244428.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/1000244432.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/920f9c62-5794-4d29-b22f-99c8c8733303.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/aaa7f3be-dc9b-45af-aac4-adca0b1733a2.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/DSC05348.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5814.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5816.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5817.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5820.jpeg');"></div>
-        <div class="img-placeholder loaded-img" style="background-image: url('hunger/IMG_5823.jpeg');"></div>
+        <!-- Duplicate Set -->
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/022208a7-d271-423d-b1bc-a178908eb73c.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/1000244428.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/1000244432.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/920f9c62-5794-4d29-b22f-99c8c8733303.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/aaa7f3be-dc9b-45af-aac4-adca0b1733a2.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/DSC05348.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/IMG_5814.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/IMG_5816.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/IMG_5817.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/IMG_5820.jpeg')"></div>
+        <div class="img-placeholder loaded-img lazy-bg" data-bg="url('hunger/IMG_5823.jpeg')"></div>
 
     </div>
 </div>
@@ -769,12 +736,7 @@ header.scrolled header.scrolled nav {
             <h4>FOREST FLOWER</h4>
             <p><i class="fas fa-map-marker-alt"></i> <span>Nani Estate, Cheppudi Road, Horoor Village & Post, Sunticoppa – 571237, Kodagu, Karnataka</span></p>
             <p><i class="fas fa-map-pin"></i> <span>Plus Code: CRC3+RG Madikeri</span></p>
-            <p><i class="fas fa-bus"></i> <span>Getting Here:
-
-Reach Suntikoppa and search for Coorg Greens Plantation Walk, Kedakal on Google Maps. From there, follow the Forest Flower signboard and take the left turn. Continue straight until you reach the second Forest Flower signboard, then take the right. Follow the signboards to arrive at the homestay.
-</span></p>
-            
-        
+            <p><i class="fas fa-bus"></i> <span>Getting Here: Reach Suntikoppa and search for Coorg Greens Plantation Walk, Kedakal on Google Maps. From there, follow the Forest Flower signboard and take the left turn. Continue straight until you reach the second Forest Flower signboard, then take the right. Follow the signboards to arrive at the homestay.</span></p>
             <p><i class="fas fa-phone-alt"></i> <span>094484 33128 / 098454 26744</span></p>
             <p style="margin-top: 20px;"><i class="fas fa-phone"></i> <span>89518 41251 (Business)</span></p>
             
@@ -785,7 +747,6 @@ Reach Suntikoppa and search for Coorg Greens Plantation Walk, Kedakal on Google 
             <h4>PROTOCOL</h4>
             <p><i class="far fa-clock"></i> <span>Check-in: 1:00 PM</span></p>
             <p><i class="far fa-clock"></i> <span>Check-out: 11:00 AM</span></p>
-            
         </div>
         <div class="footer-bottom reveal-3d">
             © 2026 Forest Flower Home Stay
@@ -901,6 +862,32 @@ Reach Suntikoppa and search for Coorg Greens Plantation Walk, Kedakal on Google 
             window.open(`https://wa.me/${ownerNumber}?text=${message}`, '_blank');
             closeModal();
         }
+
+        // 6. Image Lazy Loading Observer
+        document.addEventListener("DOMContentLoaded", function() {
+            const lazyBackgrounds = [].slice.call(document.querySelectorAll(".lazy-bg"));
+
+            if ("IntersectionObserver" in window) {
+                let lazyBackgroundObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.style.backgroundImage = entry.target.dataset.bg;
+                            entry.target.classList.remove("lazy-bg");
+                            lazyBackgroundObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { rootMargin: "0px 0px 300px 0px" }); // Load slightly before coming into view
+
+                lazyBackgrounds.forEach(function(lazyBackground) {
+                    lazyBackgroundObserver.observe(lazyBackground);
+                });
+            } else {
+                // Fallback for older browsers
+                lazyBackgrounds.forEach(function(lazyBackground) {
+                    lazyBackground.style.backgroundImage = lazyBackground.dataset.bg;
+                });
+            }
+        });
         
     </script>
     <div class="footer-bottom reveal-3d">
