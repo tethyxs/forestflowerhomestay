@@ -386,6 +386,8 @@ header.scrolled nav {
         .footer-col p { font-size: clamp(0.85rem, 1vw, 0.9rem); font-weight: 500; margin-bottom: 1.5vh; color: var(--text-muted); display: flex; align-items: flex-start; gap: 15px; }
         .footer-col i { color: var(--accent); font-size: 1.2rem; margin-top: 3px; }
         .footer-bottom { grid-column: 1 / -1; text-align: center; margin-top: 10vh; font-size: 0.8rem; font-weight: 600; color: #aaa; text-transform: uppercase; letter-spacing: 2px; }
+        .social-link { color: var(--accent); font-size: 1.8rem; text-decoration: none; transition: transform 0.3s ease, color 0.3s ease; }
+        .social-link:hover { transform: scale(1.1); color: var(--text-muted); }
 
         /* ========================================================
            MODAL FOR WHATSAPP BOOKING
@@ -732,6 +734,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
             <p><i class="fas fa-phone-alt"></i> <span>094484 33128 / 098454 26744</span></p>
             <p style="margin-top: 20px;"><i class="fas fa-phone"></i> <span>89518 41251 (Business)</span></p>
             
+            <!-- SOCIAL MEDIA LINKS -->
+            <div style="margin-top: 20px; display: flex; gap: 20px;">
+                <a href="https://www.instagram.com/forest_flower_homestay?igsh=cG43ZWZ4c21iMnUx" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/share/1E7PKJzqDN/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-square"></i></a>
+            </div>
+            
             <br>
             <a href="https://www.google.com/maps/place/Forest+Flower+Home+Stay/@12.4220975,75.8038281,17z/data=!4m9!3m8!1s0x3ba5aa9e89b794ad:0x4a0c3615de5dd68d!5m2!4m1!1i2!8m2!3d12.4220975!4d75.8038281!16s%2Fg%2F1tgcwhfc?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-sleek" style="padding: 10px 25px; font-size: 0.8rem;">Open in Maps</a>
         </div>
@@ -752,17 +760,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
             <h3 style="font-size: clamp(1.5rem, 2vw, 2.5rem); margin-bottom: 20px;">RESERVATION REQUEST</h3>
             <form id="whatsappForm" onsubmit="sendToWhatsApp(event)">
                 <input type="hidden" id="roomType" value="">
-                <div class="form-group"><label>Name</label><input type="text" id="custName" required placeholder="John Doe"></div>
+                <div class="form-group"><label>Name</label><input type="text" id="custName" required placeholder="Kaveri"></div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div class="form-group"><label>Check In</label><input type="date" id="checkIn" required></div>
                     <div class="form-group"><label>Check Out</label><input type="date" id="checkOut" required></div>
                 </div>
                 <div class="form-group">
-                    <label>Guests</label>
-                    <select id="guestCount" style="color: black;">
-                        <option value="2">2 Guests</option>
-                        <option value="3">3 Guests</option>
-                        <option value="4+">4+ Guests</option>
+                    <label>Number of Guests</label>
+                    <select id="guestCount">
+                        <option value="2" style="color: black;">2 Guests</option>
+                        <option value="3" style="color: black;">3 Guests</option>
+                        <option value="4+" style="color: black;">4+ Guests</option>
                     </select>
                 </div>
                 <button type="submit" class="btn-sleek" style="background: white; color: black; width: 100%; margin-top: 10px;">CONNECT VIA WHATSAPP</button>
