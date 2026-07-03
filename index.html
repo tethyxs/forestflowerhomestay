@@ -13,7 +13,6 @@
     <link rel="preload" href="canon/logo.jpeg" as="image">
     <link rel="preload" href="canon/stamp.png" as="image">
     <link rel="preload" href="canon/aaa.png" as="image">
-    <link rel="preload" href="sony/DSC05327.JPG" as="image">
 
     <!-- Google Fonts: Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;600;800;900&display=swap" rel="stylesheet">
@@ -226,25 +225,7 @@ header.scrolled .branding-stack .logo{
 header.scrolled nav {
     margin-top: 0;
 }
-        /* ========================================================
-           THE STENCIL ENGINE (FIXED & ANIMATED)
-           ======================================================== */
-        @keyframes stencilPan {
-            0% { background-position: 50% 50%; background-size: 110%; }
-            100% { background-position: 55% 55%; background-size: 120%; }
-        }
 
-        .stencil-hero {
-            background-image: url('sony/DSC05327.JPG') !important;
-            background-repeat: no-repeat !important;
-            animation: stencilPan 20s linear infinite alternate !important;
-            -webkit-background-clip: text !important;
-            background-clip: text !important;
-            color: transparent !important;
-            -webkit-text-fill-color: transparent !important;
-            filter: grayscale(100%) invert(1) contrast(1.8) brightness(1.1) drop-shadow(0px 8px 15px rgba(0,0,0,0.6)) !important;
-            text-shadow: none !important;
-        }
         /* ========================================================
            HERO SECTION LAYOUT
            ======================================================== */
@@ -264,6 +245,8 @@ header.scrolled nav {
             flex-direction: column; 
             align-items: flex-start; 
             text-align: left;
+            color: #ffffff; /* Clean white text */
+            text-shadow: 0 4px 20px rgba(0,0,0,0.7); /* Pop against background */
         }
 
         .hero-title { 
@@ -466,8 +449,6 @@ header.scrolled nav {
             .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); } 
             .hero .kannada-title { font-size: clamp(1rem, 4vw, 1.5rem); }
             
-            .stencil-hero { animation: none !important; background-size: cover !important; }
-
             .img-placeholder { width: 85vw; height: 56vw; } 
             .cottage-header { flex-direction: column; align-items: flex-start; }
             .btn-sleek { width: 100%; text-align: center; margin-top: 10px; }
@@ -516,13 +497,13 @@ header.scrolled nav {
     <!-- KINETIC HERO -->
     <section class="hero">
 <div class="hero-content">
-<div class="kannada-title stencil-hero">ಫಾರೆಸ್ಟ್ ಫ್ಲವರ್ ಹೋಮ್ ಸ್ಟೇ</div>
-<h1 class="hero-title stencil-hero" style="margin-bottom:0;">FOREST FLOWER</h1>
+<div class="kannada-title">ಫಾರೆಸ್ಟ್ ಫ್ಲವರ್ ಹೋಮ್ ಸ್ಟೇ</div>
+<h1 class="hero-title" style="margin-bottom:0;">FOREST FLOWER</h1>
 <div class="homestay-row">
-<h2 class="stencil-hero hero-home">HOME STAY</h2>
+<h2 class="hero-home">HOME STAY</h2>
 <img src="canon/stamp.png" class="hero-stamp" alt="Stamp">
 </div>
-<p class="stencil-hero" style="margin-top:15px;">• COORG</p>
+<p style="margin-top:15px;">• COORG</p>
 </div></section>
 
     <!-- ABOUT & STATS -->
@@ -894,7 +875,7 @@ header.scrolled nav {
     <div>© 2026 Forest Flower Home Stay. All Rights Reserved.</div>
 
     <div style="margin-top:12px; font-size:0.9rem; text-transform:none; letter-spacing:1px; line-height:1.8;">
-        Website designed &amp; developed by
+        Cut the ballsack 
         <a href="https://www.instagram.com/sanath.cr2/"
            target="_blank"
            style="color:#666; text-decoration:none; font-weight:600;">
